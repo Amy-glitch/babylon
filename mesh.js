@@ -6,7 +6,7 @@ class M {
     {
     this.scene = scene;
    // this.r = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.2}, scene);
-    this.r = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width:100,depth:100},scene);
+    this.r = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:1,depth:1},scene);
     this.r.position.y = -20;
     this.mCSG = BABYLON.CSG.FromMesh(this.r);  
     this.r.dispose();
