@@ -1,5 +1,6 @@
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
 var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+let scale = 1;
 document.addEventListener("click", klik);
 document.addEventListener("keydown", keyf);
 function klik(e) {}
@@ -32,17 +33,10 @@ let meshes = [2];
 meshes[0] = new M(scene);
 meshes[1] = new M(scene);
 
-meshes[1].mCSG = BABYLON.CSG.FromMesh(BABYLON.Mesh.CreateCylinder("cylinder", 0.6, 0.1, 0.2, 8, 1, scene, false));
-
-
-
 
 let c = new M( scene);
 
 addall();
-//let cursor = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.2}, scene);
-
-//let cursor =  BABYLON.Mesh.CreateCylinder("cylinder", 0.6, 0.1, 0.2, 8, 1, scene, false);
 
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
 
@@ -53,23 +47,22 @@ function keyf(e) {
         let int = scene.pickWithRay(ray);
 
 
+if (e.keyCode == 79)
+        {
+        scene.removeMesh(cursor);
+        scale += 1;
+        scale = scale % 7 +1;
+        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
+        }
 
-
-      
-if (int.pickedPoint){
-            
-
- }
 
 
 if (e.keyCode == 76)
 {
-     //   c.subCylinder({x:cursor.position.x,y:cursor.position.y,z:cursor.position.z,h:3,t:3,b:3});  c.final(); console.log('d'); 
-     
-     meshes.forEach(function(m){
+        meshes.forEach(function(m)
+        {
         m.subCursor(cursor.clone());
-        
-             });
+        });
      
      c.subCursor(cursor.clone());
        }
