@@ -23,8 +23,7 @@ camera.setTarget(BABYLON.Vector3.Zero());
 // Attach the camera to the canvas
 camera.attachControl(canvas, true);
 var light = new BABYLON.HemisphericLight("light",  new BABYLON.Vector3(0, 1, 0),  scene);
-var hdrTexture = new BABYLON.CubeTexture("/textures/SpecularHDR.dds", scene);
-scene.createDefaultSkybox(hdrTexture, true, 10000);
+
 
 return scene;
 };
