@@ -3,6 +3,9 @@ var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 let scale = 1;
 let material =1;
 let shape = 1;
+let nearX =0;
+let mousestall=false;
+
 document.addEventListener("click", klik);
 document.addEventListener("keydown", keyf);
 function klik(e) {}
@@ -14,7 +17,7 @@ var createScene = function ()
 
 var scene = new BABYLON.Scene();
 
-
+scene.clearColor = new BABYLON.Color3(84/256, 255/256, 252/256);
 var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
 camera.speed = 0.1;
 camera.minZ =0.1;
@@ -68,7 +71,26 @@ if (e.keyCode == 73)
 
 if (  String.fromCharCode(e.keyCode) == 'A')
 {
-alert('a');
+nearX -=1;
+mousestall = true;
+}
+
+
+if (  String.fromCharCode(e.keyCode) == 'D')
+{
+nearX +=1;
+}
+
+
+if (  String.fromCharCode(e.keyCode) == 'S')
+{
+
+}
+
+
+if (  String.fromCharCode(e.keyCode) == 'W')
+{
+
 }
 
 
@@ -80,21 +102,24 @@ if (e.keyCode == 80)
         {   
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
+      
         }
 
         if (shape == 1)
         {
         scene.removeMesh(cursor);   
         cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
+        
         }
 
         if(shape ==2)
         {
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);
+        
         }
 
-
+        cursorlock = false;
         addall();    
 }
 
@@ -108,19 +133,24 @@ if (e.keyCode == 79)
         {   
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
+      
         }
 
         if (shape == 1)
         {
         scene.removeMesh(cursor);   
         cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
+     
         }
 
         if(shape ==2)
         {
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);
+  
         }
+
+      
 
         addall();
         }
@@ -143,7 +173,9 @@ if (e.keyCode == 75)
         m.subCursor(cursor.clone());
         });
  
-      meshes[material].addCursor(cursor.clone());  
+      meshes[material].addCursor(cursor.clone()); 
+      
+      
       addall();
 
 }
@@ -160,11 +192,16 @@ if (e.keyCode == 75)
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
+    
+       if (mousestall == false)
+       {
         let ray = scene.cameras[0].getForwardRay(200);
       scene.removeMesh(cursor);
-        let int = scene.pickWithRay(ray);
+
+  
+      let int = scene.pickWithRay(ray);
      scene.addMesh(cursor);
-let rt =5;
+        let rt =5;
        
         if (int.pickedPoint){
                 cursor.position.x= Math.round(int.pickedPoint.x*rt)/rt;
@@ -178,8 +215,19 @@ let rt =5;
         cursor.position.x= Math.round(cursor.position.x*rt)/rt;
         cursor.position.y= Math.round(cursor.position.y*rt)/rt;
         cursor.position.z=Math.round(cursor.position.z*rt)/rt;
+        }
+        }
+        else
+        {
+                cursor.position.x -= 1;
+                cursor.position.y -= 1;
+                cursor.position.z -= 1;
 
-}
+        }
+
+        
+
+        
 
 
         scene.render();
