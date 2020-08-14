@@ -7,11 +7,14 @@ document.addEventListener("click", klik);
 document.addEventListener("keydown", keyf);
 function klik(e) {}
 
-//https://burtonsmediagroup.com/blog/changing-the-skybox-and-ground-settings-in-babylon-js/
 /******* Add the create scene function ******/
 var createScene = function () 
 {
-var scene = new BABYLON.Scene(engine);
+
+
+var scene = new BABYLON.Scene();
+
+
 var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
 camera.speed = 0.1;
 camera.minZ =0.1;
@@ -20,19 +23,9 @@ camera.setTarget(BABYLON.Vector3.Zero());
 // Attach the camera to the canvas
 camera.attachControl(canvas, true);
 var light = new BABYLON.HemisphericLight("light",  new BABYLON.Vector3(0, 1, 0),  scene);
+var hdrTexture = new BABYLON.CubeTexture("/textures/SpecularHDR.dds", scene);
+scene.createDefaultSkybox(hdrTexture, true, 10000);
 
-	// Sky material
-	var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
-    skyboxMaterial.backFaceCulling = false;
-        //skyboxMaterial._cachedDefines.FOG = true;
-        skyboxMaterial.luminance = 0.01;
-        skyboxMaterial.inclination = 0.2; // The solar inclination, related to the solar azimuth in interval [0, 1]
-skyboxMaterial.azimuth = 0.2; // The solar azimuth in interval [0, 1]
-
-	// Sky mesh (box)
-    var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
-    skybox.material = skyboxMaterial;
-	
 return scene;
 };
 /******* End of the create scene function ******/
@@ -40,7 +33,8 @@ return scene;
 
 
 var scene = createScene(); //Call the createScene function
-
+//scene.clearColor = new BABYLON.Color3.Blue();
+//scene.ambientColor = new BABYLON.Color3.Blue();
 let meshes = [3];
 
 meshes[0] = new M(scene);
@@ -71,6 +65,12 @@ if (e.keyCode == 73)
  material = material % 3;
 
         }
+      
+
+if (  String.fromCharCode(e.keyCode) == 'A')
+{
+alert('a');
+}
 
 
 if (e.keyCode == 80)
