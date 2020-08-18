@@ -39,122 +39,104 @@ return scene;
 
 
 var scene = createScene(); //Call the createScene function
-//scene.clearColor = new BABYLON.Color3.Blue();
-//scene.ambientColor = new BABYLON.Color3.Blue();
-let meshes = [3];
 
+//different meshes for different material types
+let meshes = [3];
 meshes[0] = new M(scene);
 meshes[1] = new M(scene);
 meshes[2] = new M(scene);
 
-
-
+//add ground and cursor!
 meshes[0].addCursor(BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:10,depth:10},scene));
-
-//meshes[0].mCSG.position.y = -30;
+let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
 addall();
 
-
-
-let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
-
+//move mouse free mouse and reset offset
 function mouseMove()
 {
-        mousestall = false;   
-        nearX=0;
-        nearY=0;
-        nearZ=0;
+mousestall = false;   
+nearX=0;
+nearY=0;
+nearZ=0;
 }
 
-
-function keyf(e) {
-        let p = scene.cameras[0].position;  
-        let ray = scene.cameras[0].getForwardRay(200);
-        let int = scene.pickWithRay(ray);
-
-
-if (e.keyCode == 73)
+//keypress
+function keyf(e) 
+{
+//[SHIFTS]//
+        //shiftX
+        if ( String.fromCharCode(e.keyCode) == 'A')
         {
- material = material +1;
- material = material % 3;
-
+        nearX -=1;
+        mousestall = true;
         }
-      
+        //shiftX
+        if ( String.fromCharCode(e.keyCode) == 'D')
+        {
+        nearX +=1;
+        mousestall = true;
+        }
+        //shiftY
+        if ( String.fromCharCode(e.keyCode) == 'S')
+        {
+        nearY -=1;
+        mousestall = true;
+        }
+        //shiftY
+        if ( String.fromCharCode(e.keyCode) == 'W')
+        {
+        nearY +=1;
+        mousestall = true;
+        console.log(mousestall);
+        }
+        //shiftZ
+        if ( String.fromCharCode(e.keyCode) == 'Q')
+        {
+        nearZ -=1;
+        mousestall = true;
+        }
+        //shiftZ
+        if ( String.fromCharCode(e.keyCode) == 'E')
+        {
+        nearZ +=1;
+        mousestall = true;
+        }
 
-if (  String.fromCharCode(e.keyCode) == 'A')
-{
-nearX -=1;
-mousestall = true;
-}
-
-
-if (  String.fromCharCode(e.keyCode) == 'D')
-{
-nearX +=1;
-mousestall = true;
-}
-
-
-if (  String.fromCharCode(e.keyCode) == 'S')
-{
-nearY -=1;
-mousestall = true;
-}
-
-
-if (  String.fromCharCode(e.keyCode) == 'Q')
-{
-nearZ -=1;
-mousestall = true;
-}
-
-
-if (  String.fromCharCode(e.keyCode) == 'E')
-{
-nearZ +=1;
-mousestall = true;
-}
-
-
-
-if (  String.fromCharCode(e.keyCode) == 'W')
-{
-nearY +=1;
-mousestall = true;
-console.log(mousestall);
-}
+        //change materiaal         
+        if (String.fromCharCode(e.keyCode) == 'I')
+        {
+        material = material +1;
+        material = material % 3;
+        }   
 
 
-if (e.keyCode == 80)
-{
+
+//[SET SHAPES OF CURSOR!!!]
+        if (String.fromCharCode(e.keyCode) == 'P')
+        {
         shape += 1;
-        shape = shape % 3;
-        if (shape == 0)
-        {   
-        scene.removeMesh(cursor);
-        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
-      
+        shape = shape % 3; //maak seker dis in shp array
+                if (shape == 0)
+                {   
+                scene.removeMesh(cursor);
+                cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
+                }
+                if (shape == 1)
+                {
+                scene.removeMesh(cursor);   
+                cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
+                }
+
+                if(shape ==2)
+                {
+                scene.removeMesh(cursor);
+                cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);  
+                }
+                cursorlock = false;
+                addall();    
         }
-
-        if (shape == 1)
-        {
-        scene.removeMesh(cursor);   
-        cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
-        
-        }
-
-        if(shape ==2)
-        {
-        scene.removeMesh(cursor);
-        cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);
-        
-        }
-
-        cursorlock = false;
-        addall();    
-}
-
-if (e.keyCode == 79)
+//[CURSOR SCALE]
+        if (String.fromCharCode(e.keyCode) == 'O')
         {
         scene.removeMesh(cursor);
         scale += 1;
@@ -164,67 +146,49 @@ if (e.keyCode == 79)
         {   
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
-      
         }
 
         if (shape == 1)
         {
         scene.removeMesh(cursor);   
-        cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
-     
+        cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);    
         }
 
         if(shape ==2)
         {
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);
-  
         }
-
-      
-
         addall();
         }
 
 
-
-if (e.keyCode == 76)
-{
-        meshes.forEach(function(m)
+//vir elke submesh in die Meshobj subCursor
+        if (String.fromCharCode(e.keyCode) == 'L')
         {
-        m.subCursor(cursor.clone());
-        });
-        addall();
-       }
-       
-if (e.keyCode == 75)
-{
-        meshes.forEach(function(m)
+                meshes.forEach(function(m)
+                {
+                m.subCursor(cursor.clone());
+                });
+                addall();
+        }
+
+//vir elke submesh in die Meshobj subCursor   and ADD cursor dan!   
+        if (String.fromCharCode(e.keyCode) == 'K')
         {
-        m.subCursor(cursor.clone());
-        });
- 
-      meshes[material].addCursor(cursor.clone()); 
-      
-      
-      addall();
-
+                meshes.forEach(function(m)
+                {
+                m.subCursor(cursor.clone());
+                });
+                meshes[material].addCursor(cursor.clone());  
+                addall();
+        }
 }
-     
-
-
-}
-
-
-
-
-
 
 
 // Register a render loop to repeatedly render the scene
-engine.runRenderLoop(function () {
-    
-    
+engine.runRenderLoop(function () 
+{
        {
         scene.removeMesh(cursor);
                 if (mousestall == false)
@@ -261,11 +225,6 @@ engine.runRenderLoop(function () {
         }
      
 
-        
-
-       
-
-       
         scene.render();
 });
 // Watch for browser/canvas resize events
