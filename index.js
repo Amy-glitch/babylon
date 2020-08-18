@@ -3,11 +3,15 @@ var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 let scale = 1;
 let material =1;
 let shape = 1;
-let nearX =0;
+let nearX=0,nearY=0,nearZ =0;
 let mousestall=false;
+let int;
+let ray;
+let curPos;
 
 document.addEventListener("click", klik);
 document.addEventListener("keydown", keyf);
+document.addEventListener("mousemove", mouseMove);
 function klik(e) {}
 
 /******* Add the create scene function ******/
@@ -54,6 +58,14 @@ addall();
 
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
 
+function mouseMove()
+{
+        mousestall = false;   
+        nearX=0;
+        nearY=0;
+        nearZ=0;
+}
+
 
 function keyf(e) {
         let p = scene.cameras[0].position;  
@@ -79,18 +91,37 @@ mousestall = true;
 if (  String.fromCharCode(e.keyCode) == 'D')
 {
 nearX +=1;
+mousestall = true;
 }
 
 
 if (  String.fromCharCode(e.keyCode) == 'S')
 {
-
+nearY -=1;
+mousestall = true;
 }
+
+
+if (  String.fromCharCode(e.keyCode) == 'Q')
+{
+nearZ -=1;
+mousestall = true;
+}
+
+
+if (  String.fromCharCode(e.keyCode) == 'E')
+{
+nearZ +=1;
+mousestall = true;
+}
+
 
 
 if (  String.fromCharCode(e.keyCode) == 'W')
 {
-
+nearY +=1;
+mousestall = true;
+console.log(mousestall);
 }
 
 
@@ -193,43 +224,48 @@ if (e.keyCode == 75)
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
     
-       if (mousestall == false)
+    
        {
-        let ray = scene.cameras[0].getForwardRay(200);
-      scene.removeMesh(cursor);
-
-  
-      let int = scene.pickWithRay(ray);
-     scene.addMesh(cursor);
+        scene.removeMesh(cursor);
+                if (mousestall == false)
+                {
+                ray = scene.cameras[0].getForwardRay(200);
+                
+                int = scene.pickWithRay(ray);
+            
+                }
+                scene.addMesh(cursor);
+   
         let rt =5;
        
-        if (int.pickedPoint){
-                cursor.position.x= Math.round(int.pickedPoint.x*rt)/rt;
-                cursor.position.y= Math.round(int.pickedPoint.y*rt)/rt;
-                cursor.position.z=Math.round(int.pickedPoint.z*rt)/rt;
+                if (int.pickedPoint)    
+                {
+                cursor.position.x= Math.round(int.pickedPoint.x*rt)/rt + nearX;
+                cursor.position.y= Math.round(int.pickedPoint.y*rt)/rt +nearY;
+                cursor.position.z=Math.round(int.pickedPoint.z*rt)/rt +nearZ;
+                }
+                else
+                {
+                let l = new BABYLON.Vector3(5,5,5);
 
+                        if (mousestall == false)
+                        {
+                        curPos= scene.cameras[0].position.add( ray.direction.multiply(l));
+                        }
+                        
+                        cursor.position.x= Math.round(curPos.x*rt)/rt + nearX;
+                        cursor.position.y= Math.round(curPos.y*rt)/rt +nearY;
+                        cursor.position.z=Math.round(curPos.z*rt)/rt +nearZ;
+             
+                }
         }
-        else{
-        let l = new BABYLON.Vector3(5,5,5);
-        cursor.position= scene.cameras[0].position.add( ray.direction.multiply(l));
-        cursor.position.x= Math.round(cursor.position.x*rt)/rt;
-        cursor.position.y= Math.round(cursor.position.y*rt)/rt;
-        cursor.position.z=Math.round(cursor.position.z*rt)/rt;
-        }
-        }
-        else
-        {
-                cursor.position.x -= 1;
-                cursor.position.y -= 1;
-                cursor.position.z -= 1;
-
-        }
+     
 
         
 
-        
+       
 
-
+       
         scene.render();
 });
 // Watch for browser/canvas resize events
