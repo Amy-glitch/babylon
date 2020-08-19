@@ -9,10 +9,11 @@ let int;
 let ray;
 let curPos;
 
-document.addEventListener("click", klik);
-document.addEventListener("keydown", keyf);
-document.addEventListener("mousemove", mouseMove);
-function klik(e) {}
+
+
+document.getElementById('renderCanvas').addEventListener("click", klik);
+document.getElementById('renderCanvas').addEventListener("keydown", keyf);
+
 
 /******* Add the create scene function ******/
 var createScene = function () 
@@ -21,7 +22,7 @@ var createScene = function ()
 
 var scene = new BABYLON.Scene();
 
-scene.clearColor = new BABYLON.Color3(84/256, 255/256, 252/256);
+scene.clearColor = new BABYLON.Color3(150/256, 255/256, 255/256);
 var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
 camera.speed = 0.1;
 camera.minZ =0.1;
@@ -47,12 +48,19 @@ meshes[1] = new M(scene);
 meshes[2] = new M(scene);
 
 //add ground and cursor!
-meshes[0].addCursor(BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:10,depth:10},scene));
+
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
+meshes[0].addCursor(BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:10,depth:10},scene));
 addall();
 
+
+let chnk = new Chunk(scene);
+chnk.retMesh(cursor.clone());
+
+
+
 //move mouse free mouse and reset offset
-function mouseMove()
+function klik()
 {
 mousestall = false;   
 nearX=0;
@@ -64,41 +72,42 @@ nearZ=0;
 function keyf(e) 
 {
 //[SHIFTS]//
+let shft =0.1;
         //shiftX
         if ( String.fromCharCode(e.keyCode) == 'A')
         {
-        nearX -=1;
+        nearX -=shft;
         mousestall = true;
         }
         //shiftX
         if ( String.fromCharCode(e.keyCode) == 'D')
         {
-        nearX +=1;
+        nearX +=shft;
         mousestall = true;
         }
         //shiftY
         if ( String.fromCharCode(e.keyCode) == 'S')
         {
-        nearY -=1;
+        nearY -=shft;
         mousestall = true;
         }
         //shiftY
         if ( String.fromCharCode(e.keyCode) == 'W')
         {
-        nearY +=1;
+        nearY +=shft;
         mousestall = true;
         console.log(mousestall);
         }
         //shiftZ
         if ( String.fromCharCode(e.keyCode) == 'Q')
         {
-        nearZ -=1;
+        nearZ -=shft;
         mousestall = true;
         }
         //shiftZ
         if ( String.fromCharCode(e.keyCode) == 'E')
         {
-        nearZ +=1;
+        nearZ +=shft;
         mousestall = true;
         }
 
@@ -246,12 +255,14 @@ function addall(){
         {
         scene.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
         scene.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.5, 0.8, 0.6, 0.8);
+        scene.meshes[i+1].material.specularColor =new BABYLON.Color4(0, 0, 0, 0);
         }
 
         if (i == 1)
         {
         scene.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
-        scene.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.1, 0.8, 0.6, 0.8);
+        scene.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.8, 0, 0.4, 0.8);
+        scene.meshes[i+1].material.specularColor = new BABYLON.Color4(0, 0, 0, 0);
         }
 
 
