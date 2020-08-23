@@ -3,7 +3,7 @@ class M {
     constructor(scene) 
     {
     this.scene = scene;
-    this.r = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:1,depth:1},scene);
+    this.r = BABYLON.MeshBuilder.CreateBox("box", {height: 0, width:0,depth:0},scene);
     this.r.position.y = -20;
     this.mCSG = BABYLON.CSG.FromMesh(this.r); 
     scene.removeMesh(this.r); 
@@ -25,7 +25,6 @@ class M {
     this.mCSG = this.mCSG.subtract(this.cCSG.clone());
     c.dispose();
     }
-
 
 
 

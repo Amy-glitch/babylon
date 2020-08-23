@@ -1,63 +1,9 @@
-var canvas = document.getElementById("renderCanvas"); // Get the canvas element
-var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-let scale = 1;
-let material =1;
-let shape = 1;
-let nearX=0,nearY=0,nearZ =0;
-let mousestall=false;
-let int;
-let ray;
-let curPos;
-
-
 
 document.getElementById('renderCanvas').addEventListener("click", klik);
 document.getElementById('renderCanvas').addEventListener("keydown", keyf);
 
-
-/******* Add the create scene function ******/
-var createScene = function () 
-{
-
-
-var scene = new BABYLON.Scene();
-
-scene.clearColor = new BABYLON.Color3(150/256, 255/256, 255/256);
-var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
-camera.speed = 0.1;
-camera.minZ =0.1;
-// Targets the camera to a particular position. In this case the scene origin
-camera.setTarget(BABYLON.Vector3.Zero());
-// Attach the camera to the canvas
-camera.attachControl(canvas, true);
-var light = new BABYLON.HemisphericLight("light",  new BABYLON.Vector3(0, 1, 0),  scene);
-
-
-return scene;
-};
-/******* End of the create scene function ******/
-
-
-
-var scene = createScene(); //Call the createScene function
-
-//different meshes for different material types
-let meshes = [3];
-meshes[0] = new M(scene);
-meshes[1] = new M(scene);
-meshes[2] = new M(scene);
-
-//add ground and cursor!
-
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
-meshes[0].addCursor(BABYLON.MeshBuilder.CreateBox("box", {height: 1, width:10,depth:10},scene));
-addall();
-
-
 let chnk = new Chunk(scene);
-chnk.retMesh(cursor.clone());
-
-
 
 //move mouse free mouse and reset offset
 function klik()
@@ -142,7 +88,7 @@ let shft =0.1;
                 cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);  
                 }
                 cursorlock = false;
-                addall();    
+                //addall();    
         }
 //[CURSOR SCALE]
         if (String.fromCharCode(e.keyCode) == 'O')
@@ -168,29 +114,19 @@ let shft =0.1;
         scene.removeMesh(cursor);
         cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);
         }
-        addall();
+        //addall();
         }
-
 
 //vir elke submesh in die Meshobj subCursor
         if (String.fromCharCode(e.keyCode) == 'L')
         {
-                meshes.forEach(function(m)
-                {
-                m.subCursor(cursor.clone());
-                });
-                addall();
+        chnk.substractCursor(cursor);
         }
 
 //vir elke submesh in die Meshobj subCursor   and ADD cursor dan!   
         if (String.fromCharCode(e.keyCode) == 'K')
         {
-                meshes.forEach(function(m)
-                {
-                m.subCursor(cursor.clone());
-                });
-                meshes[material].addCursor(cursor.clone());  
-                addall();
+        chnk.addCursor(cursor,material);
         }
 }
 
@@ -202,10 +138,8 @@ engine.runRenderLoop(function ()
         scene.removeMesh(cursor);
                 if (mousestall == false)
                 {
-                ray = scene.cameras[0].getForwardRay(200);
-                
-                int = scene.pickWithRay(ray);
-            
+                ray = scene.cameras[0].getForwardRay(200);         
+                int = scene.pickWithRay(ray);   
                 }
                 scene.addMesh(cursor);
    
@@ -229,45 +163,15 @@ engine.runRenderLoop(function ()
                         cursor.position.x= Math.round(curPos.x*rt)/rt + nearX;
                         cursor.position.y= Math.round(curPos.y*rt)/rt +nearY;
                         cursor.position.z=Math.round(curPos.z*rt)/rt +nearZ;
-             
                 }
         }
-     
-
         scene.render();
 });
+
+
 // Watch for browser/canvas resize events
-window.addEventListener("resize", function () {
+window.addEventListener("resize", function () 
+{
         engine.resize();
 });
 
-
-function addall(){
-
-     for (let i = 0; i < meshes.length;i++){
-        if ( scene.meshes[i+1]){
-        scene.meshes[i+1].dispose();}
-        
-        
-        scene.meshes[i+1] =meshes[i].mCSG.toMesh();
-
-        if (i == 0)
-        {
-        scene.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
-        scene.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.5, 0.8, 0.6, 0.8);
-        scene.meshes[i+1].material.specularColor =new BABYLON.Color4(0, 0, 0, 0);
-        }
-
-        if (i == 1)
-        {
-        scene.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
-        scene.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.8, 0, 0.4, 0.8);
-        scene.meshes[i+1].material.specularColor = new BABYLON.Color4(0, 0, 0, 0);
-        }
-
-
-
-
-     }
-
-}
