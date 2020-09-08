@@ -24,6 +24,7 @@ class Chunk
 
     addCursor(c,i)
     {
+
         this.meshes.forEach(function(m)
         {
         m.subCursor(c.clone());
@@ -39,6 +40,9 @@ class Chunk
     MoveCSGToMeshesInContainer()
     {
         
+        console.log( material_reference[0]);
+        console.log('ww');
+
         for (let i = 0; i < this.meshes.length;i++){
                     if ( this.container.meshes[i+1]){
                         this.container.meshes[i+1].dispose();}
@@ -48,16 +52,17 @@ class Chunk
             
                     if (i == 0)
                     {
-                        this.container.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
-                        this.container.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.5, 0.8, 0.6, 0.8);
-                        this.container.meshes[i+1].material.specularColor =new BABYLON.Color4(0, 0, 0, 0);
+                        this.container.meshes[i+1].material = material_reference[0]; 
                     }
             
                     if (i == 1)
                     {
-                        this.container.meshes[i+1].material = new BABYLON.StandardMaterial("myMaterial", scene);
-                        this.container.meshes[i+1].material.diffuseColor = new BABYLON.Color4(0.8, 0, 0.4, 0.8);
-                        this.container.meshes[i+1].material.specularColor = new BABYLON.Color4(0, 0, 0, 0);
+                        this.container.meshes[i+1].material = material_reference[1];
+                    }
+            
+                    if (i == 2)
+                    {
+                        this.container.meshes[i+1].material = material_reference[2];
                     }
             
             

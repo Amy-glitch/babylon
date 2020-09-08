@@ -9,6 +9,8 @@ let int;
 let ray;
 let curPos;
 
+let lbl_pos = document.getElementById('lbl_pos');
+
 
 /******* Add the create scene function ******/
 var createScene = function () 
@@ -35,3 +37,18 @@ return scene;
 
 
 var scene = createScene(); //Call the createScene function
+
+let material_reference = new Array(3);
+
+
+material_reference[0] = new BABYLON.StandardMaterial("myMaterial", scene);
+material_reference[0].diffuseColor = new BABYLON.Color4(0.8, 0, 0.4, 0.8);
+material_reference[0].specularColor = new BABYLON.Color4(0, 0, 0, 0);
+
+material_reference[1] = new BABYLON.StandardMaterial("myMaterial", scene);
+material_reference[1].diffuseColor = new BABYLON.Color4(0.5, 0.8, 0.6, 0.8);
+material_reference[1].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+material_reference[2] = new BABYLON.StandardMaterial("myMaterial", scene);
+material_reference[2].diffuseColor = new BABYLON.Color4(0.5, 0.2, 0.6, 0.8);
+material_reference[2].specularColor =new BABYLON.Color4(0, 0, 0, 0);

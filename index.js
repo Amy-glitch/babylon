@@ -3,7 +3,15 @@ document.getElementById('renderCanvas').addEventListener("click", klik);
 document.getElementById('renderCanvas').addEventListener("keydown", keyf);
 
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
-let chnk = new Chunk(scene);
+
+let worldChunks ={};
+worldChunks["111"] =  new Chunk(scene);
+
+
+
+for (const key in worldChunks) {
+        console.log(worldChunks[key]);
+    }
 
 //move mouse free mouse and reset offset
 function klik()
@@ -62,6 +70,7 @@ let shft =0.1;
         {
         material = material +1;
         material = material % 3;
+        cursor.material = material_reference[material];
         }   
 
 
@@ -120,13 +129,21 @@ let shft =0.1;
 //vir elke submesh in die Meshobj subCursor
         if (String.fromCharCode(e.keyCode) == 'L')
         {
-        chnk.substractCursor(cursor);
+        //chnk.substractCursor(cursor);
+
+                for (const key in worldChunks)
+                {
+                        worldChunks[key].substractCursor(cursor);
+                }
         }
 
 //vir elke submesh in die Meshobj subCursor   and ADD cursor dan!   
         if (String.fromCharCode(e.keyCode) == 'K')
         {
-        chnk.addCursor(cursor,material);
+        for (const key in worldChunks)
+                {
+                        worldChunks[key].addCursor(cursor,material);
+                }
         }
 }
 
@@ -166,6 +183,11 @@ engine.runRenderLoop(function ()
                 }
         }
         scene.render();
+
+
+        lbl_pos.innerHTML = 'XYZ: '+Math.round(scene.cameras[0].position._x*100)/100 +',  ' +Math.round(scene.cameras[0].position._y*100)/100 +',  ' + Math.round(scene.cameras[0].position._z*100)/100;
+
+
 });
 
 
