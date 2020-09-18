@@ -2,16 +2,47 @@
 document.getElementById('renderCanvas').addEventListener("click", klik);
 document.getElementById('renderCanvas').addEventListener("keydown", keyf);
 
-let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0.5 },scene);
+let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 2 },scene);
+cursor.position.x =0;
+cursor.position.y =0;
+cursor.position.z =0;
 
 let worldChunks ={};
-worldChunks["111"] =  new Chunk(scene);
+
+//worldChunks["0,1,1"] =  new Chunk(scene,-1,0,1);
+
+for (let i =-5; i <5; i++){
+for (let j =-5; j <5; j++){
+
+        worldChunks[i.toString() +',0,'+j.toString()  ] =  new Chunk(scene,i*10,0,j*10);
+
+
+        }}
 
 
 
-for (const key in worldChunks) {
-        console.log(worldChunks[key]);
-    }
+function genWorld()
+{
+
+        scene.removeMesh(cursor);
+        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width: 10, depth:10},scene);
+     
+
+        for (let i =-10; i <10; i++){
+        for (let j =-10; j <10; j++){
+        for (const key in worldChunks)
+        {
+                cursor.position.x = i*10;
+                cursor.position.z = j*10;
+                worldChunks[key].addCursor(cursor, Math.abs(i + j) % 3);
+        }}}
+
+
+}
+
+
+
+
 
 //move mouse free mouse and reset offset
 function klik()
@@ -27,6 +58,20 @@ function keyf(e)
 {
 //[SHIFTS]//
 let shft =0.1;
+
+if ( String.fromCharCode(e.keyCode) == 'H')
+{
+        worldChunks["0,0,0"].container.removeAllFromScene();
+      //  worldChunks["0,1,0"].container.removeAllFromScene();
+       // worldChunks["0,1,1"].container.removeAllFromScene();
+}
+
+if ( String.fromCharCode(e.keyCode) == 'G')
+{
+       genWorld();
+}
+
+
         //shiftX
         if ( String.fromCharCode(e.keyCode) == 'A')
         {
@@ -50,7 +95,7 @@ let shft =0.1;
         {
         nearY +=shft;
         mousestall = true;
-        console.log(mousestall);
+    
         }
         //shiftZ
         if ( String.fromCharCode(e.keyCode) == 'Q')
@@ -64,6 +109,9 @@ let shft =0.1;
         nearZ +=shft;
         mousestall = true;
         }
+
+     
+
 
         //change materiaal         
         if (String.fromCharCode(e.keyCode) == 'I')
@@ -140,10 +188,15 @@ let shft =0.1;
 //vir elke submesh in die Meshobj subCursor   and ADD cursor dan!   
         if (String.fromCharCode(e.keyCode) == 'K')
         {
+                for (const key in worldChunks)
+                {
+                        worldChunks[key].substractCursor(cursor);
+                }
         for (const key in worldChunks)
                 {
                         worldChunks[key].addCursor(cursor,material);
                 }
+
         }
 }
 
@@ -189,6 +242,9 @@ engine.runRenderLoop(function ()
 
 
 });
+
+
+
 
 
 // Watch for browser/canvas resize events
