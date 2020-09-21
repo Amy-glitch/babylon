@@ -11,10 +11,10 @@ let worldChunks ={};
 
 //worldChunks["0,1,1"] =  new Chunk(scene,-1,0,1);
 
-for (let i =-5; i <5; i++){
-for (let j =-5; j <5; j++){
+for (let i =-3; i <3; i++){
+for (let j =-3; j <3; j++){
 
-        worldChunks[i.toString() +',0,'+j.toString()  ] =  new Chunk(scene,i*10,0,j*10);
+        worldChunks[(i*10).toString() +':0:'+(j*10).toString()  ] =  new Chunk(scene,i*10,0,j*10);
 
 
         }}
@@ -28,8 +28,8 @@ function genWorld()
         cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width: 10, depth:10},scene);
      
 
-        for (let i =-10; i <10; i++){
-        for (let j =-10; j <10; j++){
+        for (let i =-3; i <3; i++){
+        for (let j =-3; j <3; j++){
         for (const key in worldChunks)
         {
                 cursor.position.x = i*10;
@@ -177,26 +177,28 @@ if ( String.fromCharCode(e.keyCode) == 'G')
 //vir elke submesh in die Meshobj subCursor
         if (String.fromCharCode(e.keyCode) == 'L')
         {
-        //chnk.substractCursor(cursor);
-
-                for (const key in worldChunks)
+                let chunk_key_string = Math.round(cursor.position.x/10)*10 +':' + Math.round(cursor.position.y/10)*10 +':'+ Math.round(cursor.position.z/10)*10;
+                console.log(chunk_key_string);
+                if (worldChunks[chunk_key_string] == undefined)
                 {
-                        worldChunks[key].substractCursor(cursor);
+                worldChunks[chunk_key_string] = new Chunk(scene,Math.round(cursor.position.x/10)*10,Math.round(cursor.position.y/10)*10,Math.round(cursor.position.z/10)*10); 
                 }
+                worldChunks[chunk_key_string].substractCursor(cursor);
+
         }
 
 //vir elke submesh in die Meshobj subCursor   and ADD cursor dan!   
         if (String.fromCharCode(e.keyCode) == 'K')
         {
-                for (const key in worldChunks)
+               
+               let chunk_key_string = Math.round(cursor.position.x/10)*10 +':' + Math.round(cursor.position.y/10)*10 +':'+ Math.round(cursor.position.z/10)*10;
+                console.log(chunk_key_string);
+                if (worldChunks[chunk_key_string] == undefined)
                 {
-                        worldChunks[key].substractCursor(cursor);
+                 worldChunks[chunk_key_string] = new Chunk(scene,Math.round(cursor.position.x/10)*10,Math.round(cursor.position.y/10)*10,Math.round(cursor.position.z/10)*10); 
                 }
-        for (const key in worldChunks)
-                {
-                        worldChunks[key].addCursor(cursor,material);
-                }
-
+             
+                worldChunks[chunk_key_string].addCursor(cursor,material);
         }
 }
 
