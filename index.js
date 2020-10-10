@@ -13,11 +13,12 @@ let worldChunks ={};
 
 for (let i =-3; i <3; i++){
 for (let j =-3; j <3; j++){
+for (let k =-3; k <1; k++){
+        worldChunks[(i).toString() +':'+(k).toString()+':'+(j).toString()] =  new Chunk(scene,i*10,k*10,j*10);
 
-        worldChunks[(i*10).toString() +':0:'+(j*10).toString()  ] =  new Chunk(scene,i*10,0,j*10);
 
-
-        }}
+        }
+}}
 
 
 
@@ -25,17 +26,19 @@ function genWorld()
 {
 
         scene.removeMesh(cursor);
-        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width: 10, depth:10},scene);
+        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width: 10, depth:10},scene);
      
 
         for (let i =-3; i <3; i++){
         for (let j =-3; j <3; j++){
+      //  for (let k =-3; k <0; k++){
         for (const key in worldChunks)
         {
                 cursor.position.x = i*10;
                 cursor.position.z = j*10;
+                cursor.position.y = 0*10;
                 worldChunks[key].addCursor(cursor, Math.abs(i + j) % 3);
-        }}}
+        }}}//}
 
 
 }
@@ -177,13 +180,33 @@ if ( String.fromCharCode(e.keyCode) == 'G')
 //vir elke submesh in die Meshobj subCursor
         if (String.fromCharCode(e.keyCode) == 'L')
         {
-                let chunk_key_string = Math.round(cursor.position.x/10)*10 +':' + Math.round(cursor.position.y/10)*10 +':'+ Math.round(cursor.position.z/10)*10;
-                console.log(chunk_key_string);
+
+                let cx =Math.round(cursor.position.x/10);
+                let cy =Math.round(cursor.position.y/10);
+                let cz =Math.round(cursor.position.z/10); 
+
+                let chunk_key_string =  cx+':' + cy +':'+cz ;
+     
+          
+          
+          for (let x = -1; x <= 1; x++)
+          {
+          for (let z = -1; z <= 1; z++){
+          for (let y = -1; y <= 1; y++)
+          { 
+        let tcx = cx +x;
+        let tcz = cz + z;
+        let tcy = cy + y;
+                chunk_key_string =  tcx+':' + tcy +':'+tcz ;
                 if (worldChunks[chunk_key_string] == undefined)
                 {
-                worldChunks[chunk_key_string] = new Chunk(scene,Math.round(cursor.position.x/10)*10,Math.round(cursor.position.y/10)*10,Math.round(cursor.position.z/10)*10); 
+                worldChunks[chunk_key_string] = new Chunk(scene,Math.round(tcx)*10,Math.round(tcy)*10,Math.round(tcz)*10);     
                 }
                 worldChunks[chunk_key_string].substractCursor(cursor);
+                console.log(chunk_key_string);
+          }}}
+
+
 
         }
 
@@ -191,11 +214,12 @@ if ( String.fromCharCode(e.keyCode) == 'G')
         if (String.fromCharCode(e.keyCode) == 'K')
         {
                
-               let chunk_key_string = Math.round(cursor.position.x/10)*10 +':' + Math.round(cursor.position.y/10)*10 +':'+ Math.round(cursor.position.z/10)*10;
-                console.log(chunk_key_string);
+               let chunk_key_string = Math.round(cursor.position.x/10) +':' + Math.round(cursor.position.y/10) +':'+ Math.round(cursor.position.z/10);
+           //     console.log(chunk_key_string);
                 if (worldChunks[chunk_key_string] == undefined)
                 {
                  worldChunks[chunk_key_string] = new Chunk(scene,Math.round(cursor.position.x/10)*10,Math.round(cursor.position.y/10)*10,Math.round(cursor.position.z/10)*10); 
+        
                 }
              
                 worldChunks[chunk_key_string].addCursor(cursor,material);

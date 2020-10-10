@@ -31,7 +31,7 @@ class Chunk
     addCursor(c,i)
     {
 
-        console.log(Math.abs(c.position.x - this.x));
+    
 
         if ((Math.abs(c.position.x - this.x)<10) && (Math.abs(c.position.y -this.y)<10) && (Math.abs(c.position.z - this.z)<10))
         {
