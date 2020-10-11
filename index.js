@@ -6,39 +6,72 @@ let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 2 },scene);
 cursor.position.x =0;
 cursor.position.y =0;
 cursor.position.z =0;
+let lastgen = new BABYLON.Vector3(0,0,0);
+
 
 let worldChunks ={};
 
-//worldChunks["0,1,1"] =  new Chunk(scene,-1,0,1);
-
-for (let i =-3; i <3; i++){
-for (let j =-3; j <3; j++){
-for (let k =-3; k <1; k++){
-        worldChunks[(i).toString() +':'+(k).toString()+':'+(j).toString()] =  new Chunk(scene,i*10,k*10,j*10);
-
-
-        }
-}}
 
 
 
 function genWorld()
 {
 
-        scene.removeMesh(cursor);
-        cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width: 10, depth:10},scene);
+     
      
 
-        for (let i =-3; i <3; i++){
-        for (let j =-3; j <3; j++){
-      //  for (let k =-3; k <0; k++){
-        for (const key in worldChunks)
-        {
-                cursor.position.x = i*10;
-                cursor.position.z = j*10;
-                cursor.position.y = 0*10;
-                worldChunks[key].addCursor(cursor, Math.abs(i + j) % 3);
-        }}}//}
+let xx = Math.round(scene.cameras[0].position.x/10);
+let zz = Math.round(scene.cameras[0].position.z/10);
+lastgen.x = xx;
+lastgen.y = 0;
+lastgen.z = zz;
+
+
+
+         for (let i =-6; i <6; i++){
+         for (let j =-6; j <6; j++){
+
+                let ii =i + Math.round(scene.cameras[0].position.x/10);
+                let jj=j+ Math.round(scene.cameras[0].position.z/10);
+                scene.removeMesh(cursor);
+                noise.seed(1);
+            
+            let n = (noise.simplex2(ii/20,jj/20)+1);
+                let h = Math.round(n*10);
+
+             
+            
+                cursor = BABYLON.MeshBuilder.CreateBox("box", {height: h, width: 10, depth:10},scene);
+
+
+  
+       
+        let key = (ii).toString() +':'+(0).toString()+':'+(jj).toString();
+
+
+      if (!worldChunks[key]) 
+      {
+        worldChunks[(ii).toString() +':'+(0).toString()+':'+(jj).toString()] =  new Chunk(scene,ii*10,0*10,jj*10);
+        cursor.position.x = ii*10;
+        cursor.position.z = jj*10;
+        cursor.position.y = 0*10+(h/2);
+        let m = 2;
+
+    
+        if (n < 1.3){m=0;}  
+        if (n < 0.55){m=1;}  
+        if (n < 0.45){m=3;}  
+       
+
+
+       // console.log(m);
+        worldChunks[key].addCursor(cursor, m);
+      }
+            
+      
+      
+      
+        }}
 
 
 }
@@ -155,7 +188,7 @@ if ( String.fromCharCode(e.keyCode) == 'G')
         {
         scene.removeMesh(cursor);
         scale += 1;
-        scale = scale % 7 +1;
+        scale = scale % 50 +1;
  
         if (shape == 0)
         {   
@@ -231,6 +264,22 @@ if ( String.fromCharCode(e.keyCode) == 'G')
 engine.runRenderLoop(function () 
 {
        {
+
+
+        if ( Math.abs(lastgen.subtract(scene.cameras[0].position).length())>8){
+                genWorld();
+                lastgen.x = scene.cameras[0].position.x;
+                lastgen.y = scene.cameras[0].position.y;
+                lastgen.z = scene.cameras[0].position.z;
+            
+
+        }
+        
+        
+
+
+
+
         scene.removeMesh(cursor);
                 if (mousestall == false)
                 {
@@ -240,6 +289,9 @@ engine.runRenderLoop(function ()
                 scene.addMesh(cursor);
    
         let rt =5;
+       
+      
+
        
                 if (int.pickedPoint)    
                 {
@@ -265,7 +317,8 @@ engine.runRenderLoop(function ()
 
 
         lbl_pos.innerHTML = 'XYZ: '+Math.round(scene.cameras[0].position._x*100)/100 +',  ' +Math.round(scene.cameras[0].position._y*100)/100 +',  ' + Math.round(scene.cameras[0].position._z*100)/100;
-
+        if (int.pickedMesh){
+        lbl_material.innerHTML = int.pickedMesh.material.name;}
 
 });
 

@@ -10,6 +10,7 @@ let ray;
 let curPos;
 
 let lbl_pos = document.getElementById('lbl_pos');
+let lbl_material = document.getElementById('lbl_material');
 
 
 /******* Add the create scene function ******/
@@ -38,17 +39,34 @@ return scene;
 
 var scene = createScene(); //Call the createScene function
 
-let material_reference = new Array(3);
+let material_reference = new Array(7);
 
 
-material_reference[0] = new BABYLON.StandardMaterial("myMaterial", scene);
-material_reference[0].diffuseColor = new BABYLON.Color4(0.8, 0, 0.4, 0.8);
+material_reference[0] = new BABYLON.StandardMaterial("Grass", scene);
+material_reference[0].diffuseColor = new BABYLON.Color4(0.2, 0.8, 0.2, 0.2);
 material_reference[0].specularColor = new BABYLON.Color4(0, 0, 0, 0);
 
-material_reference[1] = new BABYLON.StandardMaterial("myMaterial", scene);
-material_reference[1].diffuseColor = new BABYLON.Color4(0.5, 0.8, 0.6, 0.8);
+material_reference[1] = new BABYLON.StandardMaterial("Ground", scene);
+material_reference[1].diffuseColor = new BABYLON.Color4(77/255, 55/255, 37/255, 0.8);
 material_reference[1].specularColor =new BABYLON.Color4(0, 0, 0, 0);
 
-material_reference[2] = new BABYLON.StandardMaterial("myMaterial", scene);
-material_reference[2].diffuseColor = new BABYLON.Color4(0.5, 0.2, 0.6, 0.8);
+material_reference[2] = new BABYLON.StandardMaterial("Stone", scene);
+material_reference[2].diffuseColor = new BABYLON.Color4(192/255, 194/255, 196/255, 0.8);
 material_reference[2].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+material_reference[3] = new BABYLON.StandardMaterial("Sand", scene);
+material_reference[3].diffuseColor = new BABYLON.Color4(236/255, 240/255, 137/255, 0.8);
+material_reference[3].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+material_reference[4] = new BABYLON.StandardMaterial("r", scene);
+material_reference[4].diffuseColor = new BABYLON.Color4(5/255, 240/255, 137/255, 0.8);
+material_reference[4].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+material_reference[5] = new BABYLON.StandardMaterial("rr", scene);
+material_reference[5].diffuseColor = new BABYLON.Color4(5/255, 0/255, 137/255, 0.8);
+material_reference[5].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+
+material_reference[6] = new BABYLON.StandardMaterial("rrr", scene);
+material_reference[6].diffuseColor = new BABYLON.Color4(5/255, 240/255, 255/255, 0.8);
+material_reference[6].specularColor =new BABYLON.Color4(0, 0, 0, 0);

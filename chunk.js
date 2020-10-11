@@ -4,10 +4,14 @@ class Chunk
 
     constructor(scene,x,y,z)
     {
-    this.meshes = [3];
+    this.meshes = [7];
     this.meshes[0] = new M(scene);
     this.meshes[1] = new M(scene);
     this.meshes[2] = new M(scene);
+    this.meshes[3] = new M(scene);
+    this.meshes[4] = new M(scene);
+    this.meshes[5] = new M(scene);
+    this.meshes[6] = new M(scene);
 
     this.x = x;
     this.y = y;
@@ -64,22 +68,7 @@ class Chunk
                         this.container.meshes[i+1] =this.meshes[i].mCSG.toMesh();
                    
             
-                    if (i == 0)
-                    {
-                        this.container.meshes[i+1].material = material_reference[0]; 
-                    }
-            
-                    if (i == 1)
-                    {
-                        this.container.meshes[i+1].material = material_reference[1];
-                    }
-            
-                    if (i == 2)
-                    {
-                        this.container.meshes[i+1].material = material_reference[2];
-                    }
-            
-                  
+                    this.container.meshes[i+1].material = material_reference[i];
             
                  }
             
