@@ -22,7 +22,7 @@ var scene = new BABYLON.Scene();
 
 scene.clearColor = new BABYLON.Color3(150/256, 255/256, 255/256);
 var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
-camera.speed = 0.1;
+camera.speed = 0.5;
 camera.minZ =0.1;
 // Targets the camera to a particular position. In this case the scene origin
 camera.setTarget(BABYLON.Vector3.Zero());
@@ -70,3 +70,12 @@ material_reference[5].specularColor =new BABYLON.Color4(0, 0, 0, 0);
 material_reference[6] = new BABYLON.StandardMaterial("rrr", scene);
 material_reference[6].diffuseColor = new BABYLON.Color4(5/255, 240/255, 255/255, 0.8);
 material_reference[6].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 2 },scene);
+cursor.position.x =0;
+cursor.position.y =0;
+cursor.position.z =0;
+let lastgen = new BABYLON.Vector3(0,0,0);
+
+
+let worldChunks ={};

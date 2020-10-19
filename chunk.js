@@ -35,19 +35,20 @@ class Chunk
     addCursor(c,i)
     {
 
-    
+        
 
-        if ((Math.abs(c.position.x - this.x)<10) && (Math.abs(c.position.y -this.y)<10) && (Math.abs(c.position.z - this.z)<10))
-        {
+       // if ((Math.abs(c.position.x - this.x)<10) && (Math.abs(c.position.y -this.y)<10) && (Math.abs(c.position.z - this.z)<10))
+    console.log('eeee');
+    //    {
         this.meshes.forEach(function(m)
-        {
-         
+        {   
         m.subCursor(c.clone());
         });
+
         
         this.meshes[i].addCursor(c.clone());  
         this.MoveCSGToMeshesInContainer();
-        }
+        
     }
 
 
