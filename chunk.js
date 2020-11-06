@@ -67,13 +67,16 @@ class Chunk
 
                 
                         this.container.meshes[i+1] =this.meshes[i].mCSG.toMesh();
-                   
+                        this.container.meshes[i+1] =  this.container.meshes[i+1].convertToFlatShadedMesh();
             
                     this.container.meshes[i+1].material = material_reference[i];
-            
+                   
+                    this.container.meshes[i+1].renderOutline= true;
+                 
+                    this.container.meshes[i+1].outlineColor = new BABYLON.Color4(200/255, 0/255, 255/255, 0.8);
                  }
             
-
+           
                 }
 
 

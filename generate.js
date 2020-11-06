@@ -54,5 +54,24 @@ lastgen.z = zz;
       
         }}
 
+        shape += 1;
+        shape = shape % 3; //maak seker dis in shp array
+                if (shape == 0)
+                {   
+                scene.removeMesh(cursor);
+                cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, width: scale/5, depth:scale/5},scene);
+                }
+                if (shape == 1)
+                {
+                scene.removeMesh(cursor);   
+                cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);
+                }
+
+                if(shape ==2)
+                {
+                scene.removeMesh(cursor);
+                cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);  
+                }
+                cursorlock = false;
 
 }

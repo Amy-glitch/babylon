@@ -8,6 +8,10 @@ let mousestall=false;
 let int;
 let ray;
 let curPos;
+let position={};
+position.x =0;
+position.y =40;
+position.z =0;
 
 let lbl_pos = document.getElementById('lbl_pos');
 let lbl_material = document.getElementById('lbl_material');
@@ -20,7 +24,7 @@ var createScene = function ()
 
 var scene = new BABYLON.Scene();
 
-scene.clearColor = new BABYLON.Color3(150/256, 255/256, 255/256);
+scene.clearColor = new BABYLON.Color3(0/256, 234/256, 255/256);
 var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 5, 0), scene);
 camera.speed = 0.5;
 camera.minZ =0.1;
@@ -45,6 +49,7 @@ let material_reference = new Array(7);
 material_reference[0] = new BABYLON.StandardMaterial("Grass", scene);
 material_reference[0].diffuseColor = new BABYLON.Color4(0.2, 0.8, 0.2, 0.2);
 material_reference[0].specularColor = new BABYLON.Color4(0, 0, 0, 0);
+material_reference[0].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/88YaeZI.jpg", scene);
 
 material_reference[1] = new BABYLON.StandardMaterial("Ground", scene);
 material_reference[1].diffuseColor = new BABYLON.Color4(77/255, 55/255, 37/255, 0.8);
@@ -70,6 +75,8 @@ material_reference[5].specularColor =new BABYLON.Color4(0, 0, 0, 0);
 material_reference[6] = new BABYLON.StandardMaterial("rrr", scene);
 material_reference[6].diffuseColor = new BABYLON.Color4(5/255, 240/255, 255/255, 0.8);
 material_reference[6].specularColor =new BABYLON.Color4(0, 0, 0, 0);
+
+
 
 let cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 2 },scene);
 cursor.position.x =0;
