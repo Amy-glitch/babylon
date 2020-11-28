@@ -13,18 +13,23 @@ if ( String.fromCharCode(e.keyCode) == 'G') {genWorld();}
 
 // *MOVEMENT
 let stp = 0.1;
+if ( String.fromCharCode(e.keyCode) == 'X'){
+
+}
 if ( String.fromCharCode(e.keyCode) == 'A'){position.x =position.x -stp;}
 if ( String.fromCharCode(e.keyCode) == 'D' ){position.x = position.x +stp;}       
 if ( String.fromCharCode(e.keyCode) == 'S') {position.y= position.y -stp; }
 if ( String.fromCharCode(e.keyCode) == 'W' ){position.y =position.y +stp;}       
 if ( String.fromCharCode(e.keyCode) == 'Q'){ position.z =position.z -stp;}
 if ( String.fromCharCode(e.keyCode) == 'E'){position.z=position.z +stp;}
+if ( String.fromCharCode(e.keyCode) == 'Z'){position.y=scene.cameras[0].position._y; alert('k');}
+if ( e.keyCode == 32){scene.cameras[0].position._y += 2;}
 
  //*MATERIAL       
 if (String.fromCharCode(e.keyCode) == 'I')
 {
 material = material +1;
-material = material % 3;
+material = material % 7;
 cursor.material = material_reference[material];
 }   
 
@@ -93,14 +98,18 @@ if(shape ==2){cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:s
 // *RENDERLOOP 
 engine.runRenderLoop(function () 
 {
+      
     
-        cursor.enableEdgesRendering();    
-        cursor.edgesWidth = 4.0;
-        cursor.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
+        // cursor.enableEdgesRendering();    
+        // cursor.edgesWidth = 4.0;
+        // cursor.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
     
         {
         if ( Math.abs(lastgen.subtract(scene.cameras[0].position).length())>8){
                 genWorld();
+
+            
+          //      cursor =    BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:1, subdivisions:2},scene);
                 lastgen.x = scene.cameras[0].position.x;
                 lastgen.y = scene.cameras[0].position.y;
                 lastgen.z = scene.cameras[0].position.z;
@@ -115,12 +124,12 @@ engine.runRenderLoop(function ()
                 scene.addMesh(cursor);             
                 }
  
-                scene.cameras[0].position.x= position.x;
-                scene.cameras[0].position.y= position.y;
-                scene.cameras[0].position.z= position.z;
-                cursor.position.x= 5+ position.x;
-                cursor.position.y= -2 + position.y;
-                cursor.position.z=0 + position.z;
+                // scene.cameras[0].position.x= position.x;
+                // scene.cameras[0].position.y= position.y;
+                // scene.cameras[0].position.z= position.z;
+                cursor.position.x= position.x;
+                cursor.position.y= position.y;
+                cursor.position.z=position.z;
 
 
         scene.render();
