@@ -21,7 +21,9 @@ class M {
 
     subCursor(c)
     {
+        
     this.cCSG =  BABYLON.CSG.FromMesh(c);  
+    this.mCSG = this.mCSG.union(this.cCSG.clone());
     this.mCSG = this.mCSG.subtract(this.cCSG.clone());
     c.dispose();
     }

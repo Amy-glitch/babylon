@@ -26,6 +26,7 @@ class Chunk
     {
          this.meshes.forEach(function(m)
                  {
+
                  m.subCursor(c.clone());
                  });
         this.MoveCSGToMeshesInContainer();
@@ -55,15 +56,52 @@ class Chunk
     {
 
 
+
+         this.meshes.forEach(function(m)
+         {   
+         m.subCursor(c.clone());
+         });
+
+
+         this.meshes[i].addCursor(c.clone()); 
+        
+
+     
+
+    let  a = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width:10,depth:10},scene);
+     a.position.y = this.y;
+     a.position.x = this.x;
+     a.position.z = this.z;
+
+   let acsg =  BABYLON.CSG.FromMesh(a);
+ a.dispose();
+      
+
+  let  b = BABYLON.MeshBuilder.CreateBox("box", {height: 5000, width:5000,depth:5000},scene);
+    b.position.y = this.y;
+    b.position.x = this.x;
+   b.position.z = this.z;
+      let bcsg =  BABYLON.CSG.FromMesh(b);
+   bcsg = bcsg.subtract(acsg);
+      b = bcsg.toMesh();
+    let d = bcsg.toMesh();
+ 
+    
         this.meshes.forEach(function(m)
         {   
-        m.subCursor(c.clone());
+        //m.addCursor(d.clone());
+        m.subCursor(d.clone());
         });
+    
+        
 
-        
-        this.meshes[i].addCursor(c.clone());  
+    d.dispose();
+
+b.dispose();
         this.MoveCSGToMeshesInContainer();
-        
+            
+    
+
     }
 
 

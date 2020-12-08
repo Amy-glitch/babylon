@@ -9,7 +9,6 @@ lastgen.y = yy;
 lastgen.z = zz;
 
 
-
          for (let i =-3; i <3; i++){
          for (let j =-3; j <3; j++){
          for (let k =-3; k <0; k++){
@@ -17,6 +16,7 @@ lastgen.z = zz;
                 let ii =i + Math.round(scene.cameras[0].position.x/10);
                 let jj=j+ Math.round(scene.cameras[0].position.z/10);
                 let kk=k+ Math.round(scene.cameras[0].position.y/10);
+              
                 scene.removeMesh(cursor);
                 noise.seed(1);
             let nn = noise.simplex2(ii/20,jj/20)+1;
@@ -25,8 +25,10 @@ lastgen.z = zz;
 
              
             
-             cursor =BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:10, subdivisions:5},scene);
+            cursor =BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:15, subdivisions:3},scene);
+            
 
+            // cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 0, width:10,depth:10},scene);
   
        
         let key = (ii).toString() +':'+(kk).toString()+':'+(jj).toString();
@@ -34,10 +36,13 @@ lastgen.z = zz;
 
       if (!worldChunks[key]) 
       {
+       
         worldChunks[(ii).toString() +':'+(kk).toString()+':'+(jj).toString()] =  new Chunk(scene,ii*10,kk*10,jj*10);
+          
         cursor.position.x = ii*10;
         cursor.position.z = jj*10;
         cursor.position.y = kk*10;//+(h/2);
+        
         let m = 2;
 
     
@@ -48,28 +53,17 @@ lastgen.z = zz;
 
 
        // console.log(m);
-     worldChunks[key].addCursor(cursor,m);
+     worldChunks[key].addCursorG(cursor,m);
 
 
-
-// if ( key == (0).toString() +':'+(49).toString()+':'+(0).toString()  )
-// {
-// //  cursor = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width: 10, depth:10},scene);
-//  //let cur =    BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:100, subdivisions:3},scene);
-//  //let cur = BABYLON.MeshBuilder.CreateBox("box", {height: 10, width: 10, depth:10},scene);
-//  //cur.position.x = ii*10;
-//  alert('yet');
-// //  cur.position.z = jj*10;
-//  cur.position.y = 480;//+(h/2);
-// worldChunks[key].addCursor(cur,m);  
-// }
-
-
-
+  
+     
+     
+            
       }
             
       
-      
+    
       
          }}}
 

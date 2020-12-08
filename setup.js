@@ -25,7 +25,7 @@ var createScene = function ()
 var scene = new BABYLON.Scene();
 
 scene.clearColor = new BABYLON.Color3(0/256, 234/256, 255/256);
-var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 500, 0), scene);
+var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 30, 0), scene);
 camera.speed = 0.5;
 //camera.minZ =0.1;
 
@@ -95,6 +95,6 @@ cursor.position.x =0;
 cursor.position.y =0;
 cursor.position.z =0;
 let lastgen = new BABYLON.Vector3(0,0,0);
-
+let lastgenc = new BABYLON.Vector3(0,0,0);
 
 let worldChunks ={};

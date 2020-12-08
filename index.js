@@ -1,8 +1,7 @@
 document.getElementById('renderCanvas').addEventListener("click", klik);
 document.getElementById('renderCanvas').addEventListener("keydown", keyf);
+let  gen = false;
 function klik(){}
-
-
 
 
 // *KEYPRESS
@@ -49,14 +48,22 @@ scale = scale % 50 +1;
 UpdateCursor();  
 }
 
+if (String.fromCharCode(e.keyCode) == 'C')
+{
+scale = 1;
+UpdateCursor();  
+}
+
 //*SUBTRACT
 if (String.fromCharCode(e.keyCode) == 'L')
 {
 let cx =Math.round(cursor.position.x/10);let cy =Math.round(cursor.position.y/10);let cz =Math.round(cursor.position.z/10); 
+
+
 let chunk_key_string =  cx+':' + cy +':'+cz ;
-          for (let x = -1; x <= 1; x++){
-          for (let z = -1; z <= 1; z++){
-          for (let y = -1; y <= 1; y++){ 
+          for (let x = -2; x <= 2; x++){
+          for (let z = -2; z <= 2; z++){
+          for (let y = -2; y <= 2; y++){ 
                 let tcx = cx +x;let tcz = cz + z;let tcy = cy + y;
                 chunk_key_string =  tcx+':' + tcy +':'+tcz ;
                 if (worldChunks[chunk_key_string] == undefined)
@@ -69,9 +76,9 @@ if (String.fromCharCode(e.keyCode) == 'K')
 {
 let cx =Math.round(cursor.position.x/10);let cy =Math.round(cursor.position.y/10);let cz =Math.round(cursor.position.z/10); 
 let chunk_key_string =  cx+':' + cy +':'+cz ;         
-          for (let x = -1; x <= 1; x++){
-          for (let z = -1; z <= 1; z++){
-          for (let y = -1; y <= 1; y++){ 
+          for (let x = -2; x <= 2; x++){
+          for (let z = -2; z <= 2; z++){
+          for (let y = -2; y <= 2; y++){ 
         let tcx = cx +x;let tcz = cz + z;let tcy = cy + y;
                 chunk_key_string =  tcx+':' + tcy +':'+tcz ;
                 if (worldChunks[chunk_key_string] == undefined)
@@ -105,9 +112,10 @@ engine.runRenderLoop(function ()
         // cursor.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
     
         {
-        if ( Math.abs(lastgen.subtract(scene.cameras[0].position).length())>8){
+        if ( Math.abs(lastgen.subtract(scene.cameras[0].position).length())>8 ){
+          
                 genWorld();
-
+                
             
           //      cursor =    BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:1, subdivisions:2},scene);
                 lastgen.x = scene.cameras[0].position.x;
