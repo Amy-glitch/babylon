@@ -4,17 +4,23 @@ let  gen = false;
 function klik(){}
 
 
-// *KEYPRESS
+//KEYPRESS
 function keyf(e) 
 {
-if ( String.fromCharCode(e.keyCode) == 'H') {worldChunks["0:0:0"].container.removeAllFromScene();}
-if ( String.fromCharCode(e.keyCode) == 'G') {genWorld();}
 
-// *MOVEMENT
-let stp = 0.1;
-if ( String.fromCharCode(e.keyCode) == 'X'){
-
+if ( String.fromCharCode(e.keyCode) == 'H') 
+{
+worldChunks["0:0:0"].container.removeAllFromScene();
 }
+
+if ( String.fromCharCode(e.keyCode) == 'G') 
+{
+genWorld();
+}
+
+//MOVEMENT
+{
+let stp = 0.1;
 if ( String.fromCharCode(e.keyCode) == 'A'){position.x =position.x -stp;}
 if ( String.fromCharCode(e.keyCode) == 'D' ){position.x = position.x +stp;}       
 if ( String.fromCharCode(e.keyCode) == 'S') {position.y= position.y -stp; }
@@ -23,29 +29,24 @@ if ( String.fromCharCode(e.keyCode) == 'Q'){ position.z =position.z -stp;}
 if ( String.fromCharCode(e.keyCode) == 'E'){position.z=position.z +stp;}
 if ( String.fromCharCode(e.keyCode) == 'Z'){position.y=scene.cameras[0].position._y; alert('k');}
 if ( e.keyCode == 32){scene.cameras[0].position._y += 2;}
-
- //*MATERIAL       
-if (String.fromCharCode(e.keyCode) == 'I')
-{
-material = material +1;
-material = material % 7;
-cursor.material = material_reference[material];
-}   
-
-//*SHAPE
-if (String.fromCharCode(e.keyCode) == 'P')
-{
-shape += 1;
-shape = shape % 3; //maak seker dis in shp array
-UpdateCursor();         
 }
 
-//*SCALE
+//MATERIAL       
+if (String.fromCharCode(e.keyCode) == 'I')
+{
+material = material +1; material = material % 7; cursor.material = material_reference[material];
+}   
+
+//SHAPE
+if (String.fromCharCode(e.keyCode) == 'P')
+{
+        shape += 1; shape = shape % 3; UpdateCursor();
+}
+
+//SCALE
 if (String.fromCharCode(e.keyCode) == 'O')
 {
-scale += 1;
-scale = scale % 50 +1;
-UpdateCursor();  
+scale += 1; scale = scale % 50 +1; UpdateCursor();  
 }
 
 if (String.fromCharCode(e.keyCode) == 'C')
@@ -54,43 +55,49 @@ scale = 1;
 UpdateCursor();  
 }
 
-//*SUBTRACT
+//SUBTRACT
 if (String.fromCharCode(e.keyCode) == 'L')
 {
-let cx =Math.round(cursor.position.x/10);let cy =Math.round(cursor.position.y/10);let cz =Math.round(cursor.position.z/10); 
-
-
-let chunk_key_string =  cx+':' + cy +':'+cz ;
-          for (let x = -2; x <= 2; x++){
-          for (let z = -2; z <= 2; z++){
-          for (let y = -2; y <= 2; y++){ 
-                let tcx = cx +x;let tcz = cz + z;let tcy = cy + y;
-                chunk_key_string =  tcx+':' + tcy +':'+tcz ;
-                if (worldChunks[chunk_key_string] == undefined)
-                {worldChunks[chunk_key_string] = new Chunk(scene,Math.round(tcx)*10,Math.round(tcy)*10,Math.round(tcz)*10);     }
-                worldChunks[chunk_key_string].substractCursor(cursor);}}}
+        Sub(cursor.position.x,cursor.position.y,cursor.position.z);
 }
 
-//*ADDITION
+//ADDITION
 if (String.fromCharCode(e.keyCode) == 'K')
 {
-let cx =Math.round(cursor.position.x/10);let cy =Math.round(cursor.position.y/10);let cz =Math.round(cursor.position.z/10); 
-let chunk_key_string =  cx+':' + cy +':'+cz ;         
-          for (let x = -2; x <= 2; x++){
-          for (let z = -2; z <= 2; z++){
-          for (let y = -2; y <= 2; y++){ 
-        let tcx = cx +x;let tcz = cz + z;let tcy = cy + y;
-                chunk_key_string =  tcx+':' + tcy +':'+tcz ;
-                if (worldChunks[chunk_key_string] == undefined)
-                {worldChunks[chunk_key_string] = new Chunk(scene,Math.round(tcx)*10,Math.round(tcy)*10,Math.round(tcz)*10);}
-                worldChunks[chunk_key_string].substractCursor(cursor);}}}
+        Add(cursor.position.x,cursor.position.y,cursor.position.z,material);
 
-                chunk_key_string = Math.round(cursor.position.x/10) +':' + Math.round(cursor.position.y/10) +':'+ Math.round(cursor.position.z/10);
-                if (worldChunks[chunk_key_string] == undefined)
-                { worldChunks[chunk_key_string] = new Chunk(scene,Math.round(cursor.position.x/10)*10,Math.round(cursor.position.y/10)*10,Math.round(cursor.position.z/10)*10); }  
-                worldChunks[chunk_key_string].addCursor(cursor,material);
 }
 
+
+
+}
+
+function Sub(x,y,z)
+{
+        let cx =Math.round(x/10);let cy =Math.round(y/10);let cz =Math.round(z/10); 
+
+
+        let chunk_key_string =  cx+':' + cy +':'+cz ;
+                  for (let x = -1; x <= 1; x++){
+                  for (let z = -1; z <= 1; z++){
+                  for (let y = -1; y <= 1; y++){ 
+                        let tcx = cx +x;let tcz = cz + z;let tcy = cy + y;
+                        chunk_key_string =  tcx+':' + tcy +':'+tcz ;
+                        if (worldChunks[chunk_key_string] == undefined)
+                        {worldChunks[chunk_key_string] = new Chunk(scene,Math.round(tcx)*10,Math.round(tcy)*10,Math.round(tcz)*10);     }
+                        worldChunks[chunk_key_string].substractCursor(cursor);}}}      
+}
+
+function Add(x,y,z,mat)
+{
+        let cx =Math.round(x/10);let cy =Math.round(y/10);let cz =Math.round(z/10); 
+        let chunk_key_string =  cx+':' + cy +':'+cz ;         
+        Sub(x,y,z);   
+        
+                        chunk_key_string = Math.round(x/10) +':' + Math.round(y/10) +':'+ Math.round(z/10);
+                        if (worldChunks[chunk_key_string] == undefined)
+                        { worldChunks[chunk_key_string] = new Chunk(scene,Math.round(x/10)*10,Math.round(y/10)*10,Math.round(z/10)*10); }  
+                        worldChunks[chunk_key_string].addCursor(cursor,mat);
 }
 
 
@@ -101,6 +108,7 @@ if (shape == 0){cursor = BABYLON.MeshBuilder.CreateBox("box", {height: scale/5, 
 if (shape == 1){cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height: scale/5, radius: scale/5, subdivisions:1},scene);}
 if(shape ==2){cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);} 
 }
+
 
 // *RENDERLOOP 
 engine.runRenderLoop(function () 
