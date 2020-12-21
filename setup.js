@@ -15,6 +15,7 @@ position.z =0;
 
 let lbl_pos = document.getElementById('lbl_pos');
 let lbl_material = document.getElementById('lbl_material');
+let lbl_scale =document.getElementById('lbl_scale');
 
 
 /******* Add the create scene function ******/
@@ -34,9 +35,9 @@ camera.setTarget(BABYLON.Vector3.Zero());
 // Attach the camera to the canvas
 camera.attachControl(canvas, true);
 var light = new BABYLON.HemisphericLight("light",  new BABYLON.Vector3(0, 1, 0),  scene);
-scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
-camera.applyGravity = true;
-camera._needMoveForGravity = true;
+// scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
+// camera.applyGravity = true;
+// camera._needMoveForGravity = true;
 camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 scene.collisionsEnabled = true;
 camera.checkCollisions = true;
@@ -56,28 +57,28 @@ let material_reference = new Array(7);
 material_reference[0] = new BABYLON.StandardMaterial("Grass", scene);
 material_reference[0].diffuseColor = new BABYLON.Color4(0.2, 0.8, 0.2, 0.2);
 material_reference[0].specularColor = new BABYLON.Color4(0, 0, 0, 0);
-material_reference[0].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/tEd3jYH.jpg", scene);
+//material_reference[0].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/tEd3jYH.jpg", scene);
 
 material_reference[1] = new BABYLON.StandardMaterial("Ground", scene);
 material_reference[1].diffuseColor = new BABYLON.Color4(77/255, 55/255, 37/255, 0.8);
 material_reference[1].specularColor =new BABYLON.Color4(0, 0, 0, 0);
-material_reference[1].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/2Lu9hpR.jpg", scene);
+//material_reference[1].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/2Lu9hpR.jpg", scene);
 
 material_reference[2] = new BABYLON.StandardMaterial("Stone", scene);
 material_reference[2].diffuseColor = new BABYLON.Color4(192/255, 194/255, 196/255, 0.8);
 material_reference[2].specularColor =new BABYLON.Color4(0, 0, 0, 0);
-material_reference[2].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/CdQYC3p.jpg", scene);
+//material_reference[2].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/CdQYC3p.jpg", scene);
 
 material_reference[3] = new BABYLON.StandardMaterial("Sand", scene);
 material_reference[3].diffuseColor = new BABYLON.Color4(236/255, 240/255, 137/255, 0.8);
 material_reference[3].specularColor =new BABYLON.Color4(0, 0, 0, 0);
-material_reference[3].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/nTNnm25.jpg", scene);
+//material_reference[3].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/nTNnm25.jpg", scene);
 
 
 material_reference[4] = new BABYLON.StandardMaterial("r", scene);
 material_reference[4].diffuseColor = new BABYLON.Color4(5/255, 200/255, 137/255, 0.8);
 material_reference[4].specularColor =new BABYLON.Color4(0, 0, 0, 0);
-material_reference[4].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/ojwa3ZM.jpg", scene);
+//material_reference[4].diffuseTexture = new BABYLON.Texture("https://i.imgur.com/ojwa3ZM.jpg", scene);
 
 material_reference[5] = new BABYLON.StandardMaterial("rr", scene);
 material_reference[5].diffuseColor = new BABYLON.Color4(50/255, 0/255, 137/255, 0.8);
@@ -98,3 +99,4 @@ let lastgen = new BABYLON.Vector3(0,0,0);
 let lastgenc = new BABYLON.Vector3(0,0,0);
 
 let worldChunks ={};
+let world = new World(scene);
