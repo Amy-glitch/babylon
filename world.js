@@ -105,10 +105,58 @@ for (let yy = -i; yy<=i; yy++){
     }
 }
 }
+}
 
+genChunk(x,y,z)
+{
+    
+let l = (noise.simplex3(x/10,y/10,z/10)+1)/2;
+let n = (noise.simplex2(x/10,z/10)+1)/2;
+
+
+
+
+if (y < 0){
+ 
+   scene.removeMesh(cursor);                  
+   cursor =BABYLON.MeshBuilder.CreateBox("box", {height: 10, width: 10, depth:10,scene});
+  cursor.position.x =x*10; 
+  cursor.position.y =y*10; 
+  cursor.position.z =z*10; 
+
+this.add(Math.abs(cursor.position.y % 3),cursor);
 
 }
 
 
+UpdateCursor();
+
+}
+
+subgenChunk(x,y,z)
+{
+    
+let l = (noise.simplex3(x/10,y/10,z/10)+1)/2;
+let n = (noise.simplex2(x/10,z/10)+1)/2;
+
+
+
+
+if (n > 0.5){
+ 
+   scene.removeMesh(cursor);                  
+   cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:15, subdivisions:1},scene);
+  cursor.position.x =x*10; 
+  cursor.position.y =y*10; 
+  cursor.position.z =z*10; 
+
+this.specsub(x*10,y*10,z*10);
+
+}
+
+scene.render();
+UpdateCursor();
+
+}
 
 }

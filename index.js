@@ -1,6 +1,14 @@
 document.getElementById('renderCanvas').addEventListener("keydown", keyf);
 
 
+
+
+function addChunk(){
+ world.genChunk(document.getElementById('inpX').value,document.getElementById('inpY').value,document.getElementById('inpZ').value);
+
+
+}
+
 function keyf(e) 
 {
         if ( String.fromCharCode(e.keyCode) == 'H') 
@@ -65,8 +73,49 @@ function keyf(e)
 
         if (String.fromCharCode(e.keyCode) == 'V')
         {
-                world.multiadd(material,2);
+                world.multiadd(material,3);
         }
+
+
+        if (String.fromCharCode(e.keyCode) == 'B')
+        {
+             cursor.rotation.x =    cursor.rotation.x  +Math.PI/4;
+        }
+        if (String.fromCharCode(e.keyCode) == 'N')
+        {
+             cursor.rotation.y =    cursor.rotation.y   +Math.PI/4;
+        }
+        if (String.fromCharCode(e.keyCode) == 'M')
+        {
+             cursor.rotation.z =    cursor.rotation.z  +Math.PI/4;
+        }
+
+        if (String.fromCharCode(e.keyCode) == 'C')
+        {
+                
+        let wrange =2;
+        let drange =1;
+
+        // for (let x = -wrange; x<= wrange; x++ ){
+        // for (let y = -drange; y<= drange; y++ ){
+        // for (let z = -wrange; z<= wrange; z++ ){
+             
+        //         world.genChunk(x,y,z);
+          
+              
+        // }}}
+
+        // for (let x = -wrange; x<= wrange; x++ ){
+        // for (let y = -drange; y<= drange; y++ ){
+        // for (let z = -wrange; z<= wrange; z++ ){
+        //                 world.subgenChunk(x,y,z);
+                   
+        //         }}}
+
+
+
+        }
+
 
 
 }
@@ -81,16 +130,30 @@ if (shape == 1){cursor = BABYLON.MeshBuilder.CreateCylinder("cylinder", {height:
 if(shape ==2){cursor = BABYLON.MeshBuilder.CreateIcoSphere('icosphere',{radius:scale/5, subdivisions:1},scene);} 
 }
 
-genWorld();
-UpdateCursor();
+// genWorld();
+// UpdateCursor();
+
+
 
 //RENDERLOOP 
+let test =0;
+let testt=0
+
 engine.runRenderLoop(function () 
 {
     
         // cursor.enableEdgesRendering();    
         // cursor.edgesWidth = 4.0;
         // cursor.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
+      if (test < 20){
+        world.genChunk(test,-1,testt);
+        if (testt < 20 && test == 19){
+                testt = testt + 1;
+                test =0;
+        }
+        test = test +1;
+}       
+      
 
 
         scene.removeMesh(cursor);   
@@ -110,6 +173,8 @@ engine.runRenderLoop(function ()
         lbl_pos.innerHTML = 'XYZ: '+Math.round(scene.cameras[0].position._x*100)/100 +',  ' +Math.round(scene.cameras[0].position._y*100)/100 +',  ' + Math.round(scene.cameras[0].position._z*100)/100;
         if (int.pickedMesh){lbl_material.innerHTML = int.pickedMesh.material.name;   } else {    lbl_material.innerHTML = 'Sky';  }
         lbl_scale.innerHTML = 'cursorScale: ' + scale;
+        lbl_chk.innerHTML =  'XYZ: '+Math.round(scene.cameras[0].position._x/10)+',  ' +Math.round(scene.cameras[0].position._y/10) +',  ' + Math.round(scene.cameras[0].position._z/10);
+
 
 });
 

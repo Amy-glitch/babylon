@@ -16,6 +16,7 @@ position.z =0;
 let lbl_pos = document.getElementById('lbl_pos');
 let lbl_material = document.getElementById('lbl_material');
 let lbl_scale =document.getElementById('lbl_scale');
+let lbl_chk =document.getElementById('lbl_chk');
 
 
 /******* Add the create scene function ******/
@@ -49,6 +50,7 @@ return scene;
 
 
 var scene = createScene(); //Call the createScene function
+
 
 
 let material_reference = new Array(7);

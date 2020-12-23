@@ -29,11 +29,17 @@
 
    <body>
 
-<label id="lbl_pos" style="position: absolute; " >button</label>
-<label id="lbl_material" style="position: absolute; top:15px; " >button</label>
-<label id="lbl_scale" style="position: absolute; top:30px; " >button</label>
+<label id="lbl_pos" style="position: absolute; " >x</label>
+<label id="lbl_material" style="position: absolute; top:15px; " >x</label>
+<label id="lbl_scale" style="position: absolute; top:30px; " >x</label>
+<label id="lbl_chk" style="position: absolute; top:45px; " >x</label>
+<input id="inpX" style="position: absolute; top:60px; width:30px;" >x</input>
+<input id="inpY" style="position: absolute; top:60px; width:30px; left:30px;" >x</input>
+<input id="inpZ" style="position: absolute; top:60px; width:30px; left:60px;" >x</input>
+<button id="btn" onclick='addChunk()' style="position: absolute; top:60px; left:90px;" >Generate chunk</button>
 
     <canvas id="renderCanvas" touch-action="none"></canvas> <!-- touch-action="none" for best results from PEP -->
+    <script src="noise.js">  </script>
     <script src="world.js">  </script>
     <script src="setup.js">  </script>
     <script src="mesh.js"></script>
